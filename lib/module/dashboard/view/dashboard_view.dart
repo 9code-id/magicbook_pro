@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hyper_ui/core.dart';
+import 'package:hyper_ui/module/__exercise/oop_test.dart';
 import 'package:hyper_ui/module/__exercise/technical_test.dart';
 
 class DashboardView extends StatefulWidget {
@@ -38,16 +39,20 @@ class DashboardView extends StatefulWidget {
               key: UniqueKey(),
               items: [
                 {
-                  "label": "Dart basic",
+                  "label": "1. Dart basic",
                   "value": 0,
                 },
                 {
-                  "label": "Flutter Widget",
+                  "label": "2. OOP",
                   "value": 1,
                 },
                 {
-                  "label": "HTTP Request",
+                  "label": "3. HTTP Request",
                   "value": 2,
+                },
+                {
+                  "label": "4. Flutter Widget",
+                  "value": 3,
                 },
               ],
               value: controller.selectedIndex,
@@ -60,6 +65,7 @@ class DashboardView extends StatefulWidget {
               index: controller.selectedIndex,
               children: [
                 DashboardTechnicalTestView(test: test),
+                OopTestView(),
                 UnderMaintenanceView(),
                 UnderMaintenanceView(),
               ],

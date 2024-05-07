@@ -1,10 +1,18 @@
-//#TEMPLATE reuseable_category_picker
 import 'package:flutter/material.dart';
 import 'package:hyper_ui/shared/theme/theme_config.dart';
-import 'package:hyper_ui/shared/theme/theme_size.dart';
-import 'package:hyper_ui/shared/widget/form/button/button.dart';
 
 class QCategoryPicker extends StatefulWidget {
+  const QCategoryPicker({
+    required this.items,
+    required this.onChanged,
+    super.key,
+    this.itemBuilder,
+    this.value,
+    this.validator,
+    this.label,
+    this.hint,
+    this.helper,
+  });
   final List<Map<String, dynamic>> items;
   final String? label;
   final dynamic value;
@@ -24,17 +32,6 @@ class QCategoryPicker extends StatefulWidget {
     dynamic value,
     Map<String, dynamic> item,
   ) onChanged;
-  const QCategoryPicker({
-    super.key,
-    required this.items,
-    required this.onChanged,
-    this.itemBuilder,
-    this.value,
-    this.validator,
-    this.label,
-    this.hint,
-    this.helper,
-  });
 
   @override
   State<QCategoryPicker> createState() => _QCategoryPickerState();
@@ -47,27 +44,27 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
   updateIndex(newIndex) {
     selectedIndex = newIndex;
     setState(() {});
-    var item = items[selectedIndex];
-    var index = selectedIndex;
-    var label = item["label"];
-    var value = item["value"];
+    final item = items[selectedIndex];
+    final index = selectedIndex;
+    final label = item['label'];
+    final value = item['value'];
     widget.onChanged(index, label, value, item);
   }
 
-  getLabel() {
+  Widget getLabel() {
     if (widget.label == null) return Container();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${widget.label}",
+          '${widget.label}',
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 12,
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
         ),
         const SizedBox(
-          height: 6.0,
+          height: 6,
         ),
       ],
     );
@@ -77,7 +74,7 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
   void initState() {
     items = widget.items;
     if (widget.value != null) {
-      selectedIndex = items.indexWhere((i) => i["value"] == widget.value);
+      selectedIndex = items.indexWhere((i) => i['value'] == widget.value);
     }
     super.initState();
   }
@@ -92,7 +89,6 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
         initialValue: false,
         validator: (value) =>
             widget.validator!(selectedIndex == -1 ? null : selectedIndex),
-        enabled: true,
         builder: (FormFieldState<bool> field) {
           return InputDecorator(
             decoration: InputDecoration(
@@ -113,7 +109,7 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 6.0,
+                    height: 6,
                   ),
                   SingleChildScrollView(
                     controller: ScrollController(),
@@ -121,10 +117,9 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
                     clipBehavior: Clip.none,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: List.generate(items.length, (index) {
-                        bool selected = selectedIndex == index;
-                        var item = items[index];
+                        final selected = selectedIndex == index;
+                        final item = items[index];
 
                         if (widget.itemBuilder != null) {
                           return widget.itemBuilder!(item, selected, () {
@@ -132,17 +127,54 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
                           });
                         }
 
+                        final count = item['count'] ?? 0;
+
                         return Container(
+                          height: 32,
                           margin: const EdgeInsets.only(
-                            right: 8.0,
+                            right: 8,
                           ),
-                          child: QButton(
-                            label: item["label"],
-                            color: selected ? primaryColor : disabledColor,
-                            onPressed: () => updateIndex(index),
-                            spaceBetween: false,
-                            size: xs,
-                            width: 200.0,
+                          child: InkWell(
+                            onTap: () => updateIndex(index),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: selected ? primaryColor : disabledColor,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    item['label'],
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color:
+                                          selected ? Colors.white : textColor,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  if (count > 0)
+                                    CircleAvatar(
+                                      radius: 6,
+                                      backgroundColor: Colors.red,
+                                      child: Text(
+                                        '$count',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 8,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         );
                       }),
@@ -157,5 +189,3 @@ class _QCategoryPickerState extends State<QCategoryPicker> {
     );
   }
 }
-
-//#END

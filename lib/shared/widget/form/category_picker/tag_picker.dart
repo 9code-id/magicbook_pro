@@ -1,7 +1,18 @@
-//#TEMPLATE reuseable_tag_picker
 import 'package:flutter/material.dart';
+import 'package:hyper_ui/shared/theme/theme_config.dart';
 
 class QTagPicker extends StatefulWidget {
+  const QTagPicker({
+    required this.items,
+    required this.onChanged,
+    super.key,
+    this.itemBuilder,
+    this.value,
+    this.validator,
+    this.label,
+    this.hint,
+    this.helper,
+  });
   final List<Map<String, dynamic>> items;
   final String? label;
   final dynamic value;
@@ -21,17 +32,6 @@ class QTagPicker extends StatefulWidget {
     dynamic value,
     Map<String, dynamic> item,
   ) onChanged;
-  const QTagPicker({
-    super.key,
-    required this.items,
-    required this.onChanged,
-    this.itemBuilder,
-    this.value,
-    this.validator,
-    this.label,
-    this.hint,
-    this.helper,
-  });
 
   @override
   State<QTagPicker> createState() => _QTagPickerState();
@@ -44,27 +44,27 @@ class _QTagPickerState extends State<QTagPicker> {
   updateIndex(newIndex) {
     selectedIndex = newIndex;
     setState(() {});
-    var item = items[selectedIndex];
-    var index = selectedIndex;
-    var label = item["label"];
-    var value = item["value"];
+    final item = items[selectedIndex];
+    final index = selectedIndex;
+    final label = item['label'];
+    final value = item['value'];
     widget.onChanged(index, label, value, item);
   }
 
-  getLabel() {
+  Widget getLabel() {
     if (widget.label == null) return Container();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${widget.label}",
+          '${widget.label}',
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 12,
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
         ),
         const SizedBox(
-          height: 6.0,
+          height: 6,
         ),
       ],
     );
@@ -74,7 +74,7 @@ class _QTagPickerState extends State<QTagPicker> {
   void initState() {
     items = widget.items;
     if (widget.value != null) {
-      selectedIndex = items.indexWhere((i) => i["value"] == widget.value);
+      selectedIndex = items.indexWhere((i) => i['value'] == widget.value);
     }
     super.initState();
   }
@@ -83,56 +83,62 @@ class _QTagPickerState extends State<QTagPicker> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        bottom: 12.0,
+        bottom: 12,
       ),
       child: FormField(
         initialValue: false,
         validator: (value) =>
             widget.validator!(selectedIndex == -1 ? null : selectedIndex),
-        enabled: true,
         builder: (FormFieldState<bool> field) {
-          return Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: List.generate(items.length, (index) {
-              bool selected = selectedIndex == index;
-              var item = items[index];
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              runAlignment: WrapAlignment.start,
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(items.length, (index) {
+                final selected = selectedIndex == index;
+                final item = items[index];
 
-              if (widget.itemBuilder != null) {
-                return widget.itemBuilder!(item, selected, () {
-                  updateIndex(index);
-                });
-              }
+                if (widget.itemBuilder != null) {
+                  return widget.itemBuilder!(item, selected, () {
+                    updateIndex(index);
+                  });
+                }
 
-              return Container(
-                child: ElevatedButton(
-                  style: selected
-                      ? null
-                      : ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).disabledColor,
-                          elevation: 0.0,
+                return Container(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: selected ? primaryColor : disabledColor,
+                      foregroundColor: selected ? Colors.white : textColor,
+                      elevation: 0,
+                    ),
+                    onPressed: () => updateIndex(index),
+                    child: Wrap(
+                      children: [
+                        Icon(
+                          item['icon'],
+                          size: 20,
                         ),
-                  onPressed: () => updateIndex(index),
-                  child: Wrap(
-                    children: [
-                      Icon(
-                        item["icon"],
-                        size: 20.0,
-                      ),
-                      const SizedBox(
-                        width: 6.0,
-                      ),
-                      Text(item["label"]),
-                    ],
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          item['label'],
+                          style: TextStyle(
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           );
         },
       ),
     );
   }
 }
-
-//#END

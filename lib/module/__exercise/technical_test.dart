@@ -7,7 +7,7 @@ class TechnicalTest {
     () {
       // ? Instruksi: Deklarasikan sebuah variabel "output" dengan tipe data int dan beri nilai 10
       // >>> Tulis jawabanmu di bawah ini
-      int output = 3;
+      int output = 10;
       // --- End of Answer ---
 
       return output == 10;
@@ -488,6 +488,7 @@ class TechnicalTest {
       // ? Instruksi: Deklarasikan sebuah variabel "output" dengan tipe data List<double> dan beri nilai [1.1, 2.2, 3.3, 4.4, 5.5]
       // >>> Tulis jawabanmu di bawah ini
 
+      List<double> output = [1.1, 2.2, 3.3, 4.4, 5.5];
       // --- End of Answer ---
 
       return output is List<double> &&
@@ -611,7 +612,13 @@ class TechnicalTest {
       //   {"fruit": "fig", "color": "purple"}
       // ]
       // >>> Tulis jawabanmu di bawah ini
-
+      List<Map<String, dynamic>> output = [
+        {"fruit": "apple", "color": "red"},
+        {"fruit": "banana", "color": "yellow"},
+        {"fruit": "cherry", "color": "red"},
+        {"fruit": "date", "color": "brown"},
+        {"fruit": "fig", "color": "purple"}
+      ];
       // --- End of Answer ---
 
       return output is List<Map<String, dynamic>> &&
