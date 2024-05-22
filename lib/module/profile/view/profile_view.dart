@@ -37,7 +37,7 @@ class ProfileView extends StatefulWidget {
                               child: CircleAvatar(
                                 radius: size - 4,
                                 backgroundImage: const NetworkImage(
-                                  "https://i.ibb.co/S32HNjD/no-image.jpg",
+                                  "https://res.cloudinary.com/dotz74j1p/image/upload/v1715660683/no-image.jpg",
                                 ),
                               ),
                             ),
