@@ -18,12 +18,13 @@ class DashboardView extends StatefulWidget {
             builder: (context, child, value) {
               return Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Scores: ${controller.pointValue.value}",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.white,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
                   ),
+                  onPressed: () {},
+                  child: Text("Scores: ${controller.pointValue.value}"),
                 ),
               );
             },

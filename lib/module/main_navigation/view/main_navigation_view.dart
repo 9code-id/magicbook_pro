@@ -11,7 +11,7 @@ class MainNavigationView extends StatefulWidget {
       mode: QNavigationMode.nav2,
       pages: [
         DashboardView(),
-        ProfileView(),
+        Container(),
       ],
       menus: [
         NavigationMenu(

@@ -28,7 +28,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       navigatorKey: Get.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: getDefaultTheme(),
-      home: LoginView(),
+      home: MainNavigationView(),
       onGenerateRoute: (routeSettings) {
         print(routeSettings.name);
         return null;

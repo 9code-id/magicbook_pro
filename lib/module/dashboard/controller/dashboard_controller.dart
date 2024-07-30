@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hyper_ui/core.dart';
-import 'package:hyper_ui/service/auth_service/auth_service.dart';
 import 'package:hyper_ui/service/db_service/db_service.dart';
 import '../view/dashboard_view.dart';
 
@@ -26,14 +24,6 @@ class DashboardController extends State<DashboardView> {
 
     timer = Timer.periodic(Duration(seconds: 2), (timer) {
       pointValue.value = point;
-    });
-
-    pointValue.addListener(() {
-      AuthService().updatePoint(
-        email: DBService.get("email")!,
-        password: DBService.get("password")!,
-        point: point,
-      );
     });
   }
 
