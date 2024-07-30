@@ -94,7 +94,7 @@ class DashboardTechnicalTestView extends StatelessWidget {
         children: [
           H5(title: "Technical test"),
           Text(
-            "Buka file dan kerjakan sesuai intruksi didalamnya",
+            "Buka file dan kerjakan sesuai intruksi didalamnya!",
             style: TextStyle(
               fontSize: 12.0,
             ),
