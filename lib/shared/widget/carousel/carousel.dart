@@ -1,5 +1,5 @@
 //#TEMPLATE reuseable_carousel
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
 import 'package:hyper_ui/shared/theme/theme_config.dart';
 
@@ -25,15 +25,16 @@ class QCarousel extends StatefulWidget {
 
 class _QCarouselState extends State<QCarousel> {
   int currentIndex = 0;
-  final CarouselController carouselController = CarouselController();
+  final cs.CarouselSliderController carouselController =
+      cs.CarouselSliderController();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         if (widget.type == CarouselType.type1)
           Builder(builder: (context) {
-            return CarouselSlider(
-              options: CarouselOptions(
+            return cs.CarouselSlider(
+              options: cs.CarouselOptions(
                 height: 160.0,
                 autoPlay: true,
                 enlargeCenterPage: true,
@@ -64,8 +65,8 @@ class _QCarouselState extends State<QCarousel> {
           }),
         if (widget.type == CarouselType.type2)
           Builder(builder: (context) {
-            return CarouselSlider(
-              options: CarouselOptions(
+            return cs.CarouselSlider(
+              options: cs.CarouselOptions(
                 height: 160.0,
                 autoPlay: true,
                 enlargeCenterPage: false,
@@ -100,8 +101,8 @@ class _QCarouselState extends State<QCarousel> {
           }),
         if (widget.type == CarouselType.type3)
           Builder(builder: (context) {
-            return CarouselSlider(
-              options: CarouselOptions(
+            return cs.CarouselSlider(
+              options: cs.CarouselOptions(
                 scrollDirection: Axis.vertical,
                 height: 160.0,
                 autoPlay: true,
@@ -135,9 +136,9 @@ class _QCarouselState extends State<QCarousel> {
           Builder(builder: (context) {
             return Column(
               children: [
-                CarouselSlider(
+                cs.CarouselSlider(
                   carouselController: carouselController,
-                  options: CarouselOptions(
+                  options: cs.CarouselOptions(
                     height: 160.0,
                     autoPlay: true,
                     enlargeCenterPage: true,
@@ -200,9 +201,9 @@ class _QCarouselState extends State<QCarousel> {
           Builder(builder: (context) {
             return Column(
               children: [
-                CarouselSlider(
+                cs.CarouselSlider(
                   carouselController: carouselController,
-                  options: CarouselOptions(
+                  options: cs.CarouselOptions(
                     height: 160.0,
                     autoPlay: true,
                     enlargeCenterPage: false,
